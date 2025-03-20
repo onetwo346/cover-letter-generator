@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; }
+        .container { max-width: 500px; margin: 50px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        input, textarea { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; background: blue; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        button:hover { background: darkblue; }
+        #output { margin-top: 20px; text-align: left; padding: 10px; background: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>AI Resume Generator</h2>
+        <p>Enter your details and get a professional resume instantly!</p>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="text" id="email" placeholder="Your Email">
+        <input type="text" id="phone" placeholder="Your Phone Number">
+        <textarea id="skills" placeholder="Your Skills (comma separated)"></textarea>
+        <textarea id="experience" placeholder="Work Experience"></textarea>
+        <button onclick="generateResume()">Generate Resume</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function generateResume() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let phone = document.getElementById("phone").value;
+            let skills = document.getElementById("skills").value;
+            let experience = document.getElementById("experience").value;
+
+            if (!name || !email || !phone || !skills || !experience) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            let resumeText = `
+                <h3>${name}</h3>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <h4>Skills:</h4>
+                <p>${skills}</p>
+                <h4>Experience:</h4>
+                <p>${experience}</p>
+                <button onclick="downloadResume()">Download Resume</button>
+            `;
+
+            document.getElementById("output").innerHTML = resumeText;
+        }
+
+        function downloadResume() {
+            let resumeContent = document.getElementById("output").innerHTML;
+            let blob = new Blob([resumeContent], { type: "text/html" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "Resume.html";
+            link.click();
+        }
+    </script>
+</body>
+</html>
